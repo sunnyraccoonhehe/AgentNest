@@ -399,11 +399,21 @@ body {
 }
 
 .code-input {
+  width: 60px;          
+  height: 64px;         
+  background: var(--light-grey);
   border: none;
-  border-radius: 8px;
+  border-radius: 12px; 
   color: white;
-  font-size: 20px;
+  font-size: 24px;     
+  font-weight: 700;
   text-align: center;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.code-input:focus {
+  border: 2px solid white; /* Розовая рамка при фокусе */
 }
 
 .page-button {
@@ -506,4 +516,13 @@ body {
   padding: 0;
   margin: 0;
   height: auto;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #2a2a2a inset !important; /* Цвет фона ячейки */
+    -webkit-text-fill-color: white !important;                 /* Цвет текста */
+    transition: background-color 5000s ease-in-out 0s;
 }

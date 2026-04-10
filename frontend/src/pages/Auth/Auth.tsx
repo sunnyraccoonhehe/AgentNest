@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import styles from './Auth.module.css'; 
 
 interface AuthProps {
   view: string;
@@ -6,7 +7,6 @@ interface AuthProps {
 }
 
 export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
-
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   if (view === 'main') return null;
@@ -30,7 +30,6 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
     }
     if (value.length === 1 && index === 4) {
       const fullCode = inputRefs.current.map(input => input?.value).join('');
-      
       if (fullCode.length === 5) {
         setTimeout(() => {
           setView(view === 'reg-code' ? 'profile' : 'ready'); 
@@ -46,72 +45,64 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
   };
 
   return (
-    <div className="page-container">
-      <button className="back-button" onClick={handleBack}>
+    <div className={styles.container}>
+      <button className={styles.backButton} onClick={handleBack}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        {/* <span>Назад</span> */}
       </button>
 
-      <div className="auth-page">
+      <div className={styles.authPage}>
         {/* Регистрация */}
         {view === 'reg' && (
-          <div className="lines">
+          <div className={styles.lines}>
             <h2>Добро пожаловать в AgentNest!</h2>
             <p>Создайте свою учетную запись</p>
-            <div className="input-group">
-              <div className="input-wrapper">
-                <span className="input-label">Адрес электронной почты / номер телефона</span>
-                <input type="text" />
+            <div className={styles.inputGroup}>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputLabel}>Email / Телефон</span>
+                <input type="text" className={styles.inputField} />
               </div>
-              
-              <div className="input-wrapper">
-                <span className="input-label">Пароль</span>
-                <input type="password" />
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputLabel}>Пароль</span>
+                <input type="password" className={styles.inputField} />
               </div>
-        
-              <button className="page-button" onClick={() => setView('reg-code')}>Регистрация</button>
+              <button className={styles.pageButton} onClick={() => setView('reg-code')}>Регистрация</button>
             </div>
-            
           </div>
         )}
 
         {/* Вход */}
         {view === 'login' && (
-          <div className="lines">
+          <div className={styles.lines}>
             <h2>Вход</h2>
-            <p>или <a onClick={() => setView('reg')}>создайте учетную запись</a></p>
-            <div className="input-group">
-              <div className="input-wrapper">
-                <span className="input-label">Адрес электронной почты / номер телефона</span>
-                <input type="text" />
+            <p>или <a onClick={() => setView('reg')}>создайте аккаунт</a></p>
+            <div className={styles.inputGroup}>
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputLabel}>Email / Телефон</span>
+                <input type="text" className={styles.inputField} />
               </div>
-              
-              <div className="input-wrapper">
-                <span className="input-label">Пароль</span>
-                <input type="password" />
+              <div className={styles.inputWrapper}>
+                <span className={styles.inputLabel}>Пароль</span>
+                <input type="password" className={styles.inputField} />
               </div>
-              
-              <button className="page-button" onClick={() => setView('login-code')}>Войти</button>
+              <button className={styles.pageButton} onClick={() => setView('login-code')}>Войти</button>
             </div>
-            
-            <a className="secondary-link">Забыли пароль?</a>
           </div>
         )}
 
-        {/* Ввод кода */}
+        {/* Код подтверждения */}
         {(view === 'reg-code' || view === 'login-code') && (
-          <div className="lines">
+          <div className={styles.lines}>
             <h2>{view === 'reg-code' ? 'Регистрация' : 'Вход'}</h2>
             <p>Введите проверочный код</p>
-            <div className="code-group">
+            <div className={styles.codeGroup}>
               {[...Array(5)].map((_, i) => (
                 <input 
                   key={i} 
                   type="text" 
                   maxLength={1} 
-                  className="code-input"
+                  className={styles.codeInput}
                   ref={(el) => { inputRefs.current[i] = el; }}
                   onChange={(e) => handleInputChange(e, i)}
                   onKeyDown={(e) => handleKeyDown(e, i)}
@@ -121,23 +112,23 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
           </div>
         )}
 
-        {/* Профиль */}
         {view === 'profile' && (
-          <div className="lines">
-            <h2 className="final">Познакомимся?</h2>
-            <div className="input-group">
-              <input type="text" placeholder="Ваше имя / никнейм" />
+          <div className={styles.lines}>
+            <h2 className={styles.final}>Познакомимся?</h2>
+            <div className={styles.inputGroup}>
+               <div className={styles.inputWrapper}>
+                <input type="text" placeholder="Ваше имя / никнейм" className={styles.inputField} />
+              </div>
             </div>
-            <button className="page-button" onClick={() => setView('ready')}>Далее</button>
+            <button className={styles.pageButton} onClick={() => setView('ready')}>Далее</button>
           </div>
         )}
 
-        {/* Готово */}
         {view === 'ready' && (
-          <div className="lines">
-            <h2 className="final final-ready">Все готово!</h2>
+          <div className={styles.lines}>
+            <h2 className={`${styles.final} ${styles.finalReady}`}>Все готово!</h2>
             <p>Добро пожаловать в AgentNest!</p>
-            <button className="page-button" onClick={() => setView('main')}>Начать планировать</button>
+            <button className={styles.pageButton} onClick={() => setView('main')}>Начать планировать</button>
           </div>
         )}
       </div>

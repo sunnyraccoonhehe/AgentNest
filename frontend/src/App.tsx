@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AuthPages } from './components/AuthPages'
+import { AuthPages } from './pages/Auth/Auth'
 import rhombus from './assets/Vector.svg'
 import logoBlack from './assets/logo_black.svg'
 import logoPink from './assets/logo_pink.svg'

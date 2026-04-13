@@ -1,0 +1,44 @@
+.container {
+    border: 1px solid white;
+    color: white;
+}
+
+aside {
+    border: 1px solid rgb(196, 76, 220);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 2px;
+    margin: 6px;
+    border: 1px solid rgb(243, 33, 208);
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    padding: 20px;
+    border: 3px solid rgb(243, 224, 243);
+}
+
+.agent-office {
+    border: 2px solid white;
+}
+.console {
+    border: 2px solid green;
+}
+
+.calendar {
+    border: 2px solid red;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    padding: 20px;
+    border: 3px solid rgb(243, 224, 243);
+}

@@ -1,26 +1,39 @@
 import React, { useRef } from 'react';
-import styles from './Auth.module.css'; 
+import styles from './Auth.module.css';
+import { LabeledInput } from './components/LabeledInput';
+import { PageButton } from './components/PageButton';
+import { CodeInputs } from './components/CodeInputs';
+
+export type AuthView =
+  | 'main'
+  | 'reg'
+  | 'login'
+  | 'reg-code'
+  | 'login-code'
+  | 'profile'
+  | 'ready';
 
 interface AuthProps {
-  view: string;
-  setView: (view: string) => void;
+  view: AuthView;
+  setView: React.Dispatch<React.SetStateAction<AuthView>>;
+  onStartPlanning?: () => void;
 }
 
-export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
+export const AuthPages: React.FC<AuthProps> = ({ view, setView, onStartPlanning }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   if (view === 'main') return null;
 
   const handleBack = () => {
-    const routes: Record<string, string> = {
-      'reg': 'main', 
-      'login': 'main', 
+    const routes: Partial<Record<AuthView, AuthView>> = {
+      'reg': 'main',
+      'login': 'main',
       'reg-code': 'reg',
-      'login-code': 'login', 
-      'profile': 'reg-code', 
+      'login-code': 'login',
+      'profile': 'reg-code',
       'ready': 'main'
     };
-    setView(routes[view] || 'main');
+    setView(routes[view] ?? 'main');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -59,15 +72,22 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
             <h2>Добро пожаловать в AgentNest!</h2>
             <p>Создайте свою учетную запись</p>
             <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <span className={styles.inputLabel}>Email / Телефон</span>
-                <input type="text" className={styles.inputField} />
-              </div>
-              <div className={styles.inputWrapper}>
-                <span className={styles.inputLabel}>Пароль</span>
-                <input type="password" className={styles.inputField} />
-              </div>
-              <button className={styles.pageButton} onClick={() => setView('reg-code')}>Регистрация</button>
+              <LabeledInput
+                classNameWrapper={styles.inputWrapper}
+                classNameLabel={styles.inputLabel}
+                classNameInput={styles.inputField}
+                label="Адрес электронной почты / номер телефона"
+              />
+              <LabeledInput
+                classNameWrapper={styles.inputWrapper}
+                classNameLabel={styles.inputLabel}
+                classNameInput={styles.inputField}
+                label="Пароль"
+                type="password"
+              />
+              <PageButton className={styles.pageButton} onClick={() => setView('reg-code')}>
+                Регистрация
+              </PageButton>
             </div>
           </div>
         )}
@@ -78,15 +98,22 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
             <h2>Вход</h2>
             <p>или <a onClick={() => setView('reg')}>создайте аккаунт</a></p>
             <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <span className={styles.inputLabel}>Email / Телефон</span>
-                <input type="text" className={styles.inputField} />
-              </div>
-              <div className={styles.inputWrapper}>
-                <span className={styles.inputLabel}>Пароль</span>
-                <input type="password" className={styles.inputField} />
-              </div>
-              <button className={styles.pageButton} onClick={() => setView('login-code')}>Войти</button>
+              <LabeledInput
+                classNameWrapper={styles.inputWrapper}
+                classNameLabel={styles.inputLabel}
+                classNameInput={styles.inputField}
+                label="Адрес электронной почты / номер телефона"
+              />
+              <LabeledInput
+                classNameWrapper={styles.inputWrapper}
+                classNameLabel={styles.inputLabel}
+                classNameInput={styles.inputField}
+                label="Пароль"
+                type="password"
+              />
+              <PageButton className={styles.pageButton} onClick={() => setView('login-code')}>
+                Войти
+              </PageButton>
             </div>
           </div>
         )}
@@ -96,19 +123,13 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
           <div className={styles.lines}>
             <h2>{view === 'reg-code' ? 'Регистрация' : 'Вход'}</h2>
             <p>Введите проверочный код</p>
-            <div className={styles.codeGroup}>
-              {[...Array(5)].map((_, i) => (
-                <input 
-                  key={i} 
-                  type="text" 
-                  maxLength={1} 
-                  className={styles.codeInput}
-                  ref={(el) => { inputRefs.current[i] = el; }}
-                  onChange={(e) => handleInputChange(e, i)}
-                  onKeyDown={(e) => handleKeyDown(e, i)}
-                />
-              ))}
-            </div>
+            <CodeInputs
+              classNameGroup={styles.codeGroup}
+              classNameInput={styles.codeInput}
+              inputRefs={inputRefs}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
           </div>
         )}
 
@@ -116,11 +137,16 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
           <div className={styles.lines}>
             <h2 className={styles.final}>Познакомимся?</h2>
             <div className={styles.inputGroup}>
-               <div className={styles.inputWrapper}>
-                <input type="text" placeholder="Ваше имя / никнейм" className={styles.inputField} />
-              </div>
+              <LabeledInput
+                classNameWrapper={styles.inputWrapper}
+                classNameLabel={styles.inputLabel}
+                classNameInput={styles.inputField}
+                label="Ваше имя / никнейм"
+              />
             </div>
-            <button className={styles.pageButton} onClick={() => setView('ready')}>Далее</button>
+            <PageButton className={styles.pageButton} onClick={() => setView('ready')}>
+              Далее
+            </PageButton>
           </div>
         )}
 
@@ -128,7 +154,12 @@ export const AuthPages: React.FC<AuthProps> = ({ view, setView }) => {
           <div className={styles.lines}>
             <h2 className={`${styles.final} ${styles.finalReady}`}>Все готово!</h2>
             <p>Добро пожаловать в AgentNest!</p>
-            <button className={styles.pageButton} onClick={() => setView('main')}>Начать планировать</button>
+            <PageButton
+              className={styles.pageButton}
+              onClick={() => (onStartPlanning ? onStartPlanning() : setView('main'))}
+            >
+              Начать планировать
+            </PageButton>
           </div>
         )}
       </div>

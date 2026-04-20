@@ -14,6 +14,18 @@ const prisma = new PrismaClient();
 app.use(cors());
 app.use(express.json());
 
+// Базовые роуты для проверки "сервер жив"
+app.get('/', (req, res) => {
+  res
+    .status(200)
+    .type('text/plain; charset=utf-8')
+    .send('AgentNest API is running. Try POST /api/auth/send-code');
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ ok: true });
+});
+
 // Временное хранилище кодов (Email: Code)
 const codes = new Map();
 

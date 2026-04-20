@@ -1,8 +1,39 @@
 :root {
-    --pink: #F4BABA;
+    --pink: #F4BABA; 
     --black: #050204;
     --shadow-pink: #987474;
     --light-grey: #5E5E5E42;
+    --red: #FF2F2F;
+    --middle-pink: #EBAEAE;
+    
+    --console-border: #F4BABA;
+    --console-background: #1F1414;
+    --bg-color: #050204;
+    --au-text-color: white;
+    --calendar-border: #EBAEAE;
+    
+}
+
+[data-theme='light'] {
+    --pink: #F4BABA;
+    --pink-plus-calendar-bg: #EBAEAE;
+    --black: #050204;
+    --shadow-pink: #987474;
+    --light-grey: #5E5E5E42;
+    --red: #FF2F2F;
+    --middle-pink: #EBAEAE;
+
+    --console-border: #987474;
+    --console-background: white;
+    --bg-color: #F4BABA;
+    --au-text-color: black;
+    --calendar-border: #987474;
+}
+
+html,
+body,
+#root {
+    height: 100%;
 }
 
 @font-face {
@@ -31,7 +62,7 @@ body {
     display: block;
     margin: 0;
     min-height: 100vh;
-
-    background-color: var(--black);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s; 
     overflow: hidden;
 }

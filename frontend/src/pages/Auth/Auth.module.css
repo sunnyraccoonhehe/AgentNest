@@ -1,14 +1,8 @@
-:root {
-  --pink: #F4BABA;
-  --black: #050204;
-  --shadow-pink: #987474;
-  --light-grey: #5E5E5E42;
-}
-
 .container {
   position: absolute;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -128,6 +122,10 @@
   top: 40px; left: 40px;
   background: none; border: none;
   cursor: pointer;
+}
+
+.final {
+  padding-bottom: 10px;
 }
 
 @keyframes pageFadeIn {

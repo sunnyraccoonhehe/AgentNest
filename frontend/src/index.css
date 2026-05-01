@@ -1,5 +1,5 @@
 :root {
-    --pink: #F4BABA; 
+    --pink: #f4baba; 
     --black: #050204;
     --shadow-pink: #987474;
     --light-grey: #5E5E5E42;
@@ -21,7 +21,6 @@
     --shadow-pink: #987474;
     --light-grey: #5E5E5E42;
     --red: #FF2F2F;
-    --middle-pink: #EBAEAE;
 
     --console-border: #987474;
     --console-background: white;
@@ -64,5 +63,5 @@ body {
     min-height: 100vh;
     background-color: var(--bg-color);
     transition: background-color 0.3s, color 0.3s; 
-    overflow: hidden;
+    /* overflow: hidden; */
 }

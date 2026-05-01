@@ -1,9 +1,11 @@
-import office from 'D:\\Agent Nest\\frontend\\src\\assets\\images\\office.png'
+import office from '@assets/images/office.png'
+
+import style from './AgentOffice.module.css'
 
 const AgentOffice: React.FC = () => {
     return (
         <>
-            <img src={office} alt='office' />
+            <img className={style['office']} src={office} alt='office' />
         </>
     )
 }

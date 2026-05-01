@@ -1,0 +1,53 @@
+-- Пользователи
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- События/задачи
+CREATE TABLE events (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    is_all_day BOOLEAN DEFAULT FALSE,
+    color VARCHAR(7), -- HEX цвет для календаря ?
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT valid_time CHECK (end_time > start_time)
+);
+
+-- Категории событий (опционально)
+CREATE TABLE categories (
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(50) NOT NULL,
+    color VARCHAR(7),
+    UNIQUE(user_id, name)
+);
+
+-- Связь событий с категориями
+CREATE TABLE event_categories (
+    event_id BIGINT REFERENCES events(id) ON DELETE CASCADE,
+    category_id BIGINT REFERENCES categories(id) ON DELETE CASCADE,
+    PRIMARY KEY (event_id, category_id)
+);
+
+-- Повторяющиеся события
+CREATE TABLE recurring_events (
+    id BIGSERIAL PRIMARY KEY,
+    event_template_id BIGINT REFERENCES events(id) ON DELETE CASCADE,
+    recurrence_pattern VARCHAR(20) CHECK (recurrence_pattern IN ('DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY')),
+    recurrence_end_date TIMESTAMP,
+    week_days INTEGER[] -- для еженедельных: [1,2,3,4,5] (1=пн)
+);
+
+-- Индексы для производительности
+CREATE INDEX idx_events_user_time ON events(user_id, start_time, end_time);
+CREATE INDEX idx_events_start_time ON events(start_time);
+CREATE INDEX idx_events_end_time ON events(end_time);

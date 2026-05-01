@@ -10,7 +10,7 @@ import moon from '@assets/moon.svg'
 
 import style from './Landing.module.css'
 
-function Landing({ theme, toggleTheme }: any) {
+function Landing({ theme, toggleTheme }) {
     const [step, setStep] = useState(0);
     const navigate = useNavigate()
 

@@ -28,7 +28,10 @@ function App() {
         path="/" 
         element={<Landing theme={theme} toggleTheme={toggleTheme} />} 
       />
-      <Route path="/auth" element={<AuthPage />} />
+      <Route 
+        path="/auth" 
+        element={<AuthPage />} 
+      />
       <Route 
         path="/user" 
         element={<Plannery theme={theme} toggleTheme={toggleTheme} />} 

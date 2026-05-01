@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AgentOffice from '../../components/AgentOffice/AgentOffice';
 import Calendar from '../../components/Calendar/Calendar';
 import Console from '../../components/Console/Console';
@@ -10,8 +10,17 @@ import chat from '@assets/chat.svg';
 import sun from '@assets/sun.svg';
 import moon from '@assets/moon.svg'
 
-function Plannery({ theme, toggleTheme }: any) {
+function Plannery({ theme, toggleTheme }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [blockHeight, setBlockHeight] = useState(0);
+
+    const leftBlockRef = useRef(null);
+
+    useEffect(() => {
+        if (leftBlockRef.current) {
+            setBlockHeight(leftBlockRef.current.getBoundingClientRect().height);
+        }
+    }, [leftBlockRef]);
 
     const handleOverlayClick = () => {
         setIsOpen(false);
@@ -19,48 +28,66 @@ function Plannery({ theme, toggleTheme }: any) {
 
     return (
         <div className={`${style.container} ${isOpen ? style.menuOpen : ''}`}>
-            <div 
-                className={`${style.overlay} ${isOpen ? style.overlayOpen : ''}`} 
-                onClick={handleOverlayClick}
-            />
+            {
+                isOpen && (
+                    <div 
+                        className={`${style.overlay} ${isOpen ? style.overlayOpen : ''}`} 
+                        onClick={handleOverlayClick}
+                    />
+                )
+            }
             
-            <aside className={`${style.aside} ${isOpen ? style.asideOpen : ''}`}>
-                <button 
-                    className={style['burg-btn']} 
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    <img src={burg} alt='menu' />
-                </button>
-
-                <div className={style.menuIcons}>
-                    <button className={style.iconBtn}><img src={profile} alt="profile" /></button>
-                    <button className={style.iconBtn}><img src={chat} alt="chat" /></button>
-                    
-                    {/* Кнопка переключения */}
-                    <button className={style.iconBtn} onClick={toggleTheme}>
-                        <img src={theme === 'dark' ? sun : moon} alt="theme toggle" />
+            <div className={style['aside-cont']}>
+                <aside className={`${style.aside} ${isOpen ? style.asideOpen : ''}`}>
+                    <button 
+                        className={style['burg-btn']} 
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <img src={burg} alt='menu' />
                     </button>
-                </div>
-            </aside>
+
+                    {
+                        isOpen && (
+                            <div className={style.menuIcons}>
+                                <button className={style.iconBtn}><img src={profile} alt="profile" /></button>
+                                <button className={style.iconBtn}><img src={chat} alt="chat" /></button>
+                                
+                                {/* Кнопка переключения */}
+                                <button className={style.iconBtn} onClick={toggleTheme}>
+                                    <img src={theme === 'dark' ? sun : moon} alt="theme toggle" />
+                                </button>
+                            </div>
+                        )
+                    }
+                    
+                </aside>
+            </div>
 
             <div className={style['main-content']}>
-                <div className={style['left-content']}>
-                    <div className={style['agent-office']}>
-                        <AgentOffice/>
+                
+                <div  className={style['left-content']}>
+                    <div className={style['left-content']} ref={leftBlockRef}>
+                        <div className={style['agent-office']}>
+                            <AgentOffice/>
+                        </div>
+                        <div className={style.console}>
+                            <Console/>
+                        </div>
                     </div>
-                    <div className={style.console}>
-                        <Console />
+                    <div>
+                        <button className={style['add-btn']}>
+                            <img src={plus} alt='add' />
+                        </button>
                     </div>
-                    <button className={style['add-btn']}>
-                        <img src={plus} alt='add' />
-                    </button>
                 </div>
                 
                 <div className={style['right-content']}>
                     <div className={style.calendar}>
-                        <Calendar/>
+                        <Calendar customHeight={blockHeight}/>
                     </div>
                 </div>
+               
+
             </div>
         </div>
     );

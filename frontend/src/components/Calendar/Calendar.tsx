@@ -6,6 +6,7 @@ type Props = {
   selectedDate?: Date | null
   onSelectDate?: (date: Date) => void
   plans?: Date[]
+  customHeight?: number | string
 }
 
 function startOfMonth(date: Date) {
@@ -41,7 +42,7 @@ const WEEKDAYS_RU = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
 const monthFmt = new Intl.DateTimeFormat('ru-RU', { month: 'long' })
 
-const Calendar: React.FC<Props> = ({ initialDate, selectedDate, onSelectDate, plans }) => {
+const Calendar: React.FC<Props> = ({ initialDate, selectedDate, onSelectDate, plans, customHeight }) => {
   const [month, setMonth] = useState(() => startOfMonth(initialDate ?? new Date()))
   const [internalSelected, setInternalSelected] = useState<Date | null>(null)
 
@@ -81,7 +82,7 @@ const Calendar: React.FC<Props> = ({ initialDate, selectedDate, onSelectDate, pl
   }
 
   return (
-    <div className={styles.calendar}>
+    <div className={styles.calendar} style={{ height: customHeight ?? 'auto' }}>
       <div className={styles.header}>
         <button className={styles.navBtn} onClick={() => setMonth((m) => addMonths(m, -1))} aria-label="Назад">
           ‹

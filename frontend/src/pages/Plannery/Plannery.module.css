@@ -5,29 +5,39 @@
 }
 
 .container {
+
+    max-width: 1300px;
+    width: 100%;
+
     min-height: 100vh;
     color: white;
+
     position: relative;
-    display: grid;
-    place-items: center;
-    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    /* place-items: center; */
+
+    /* padding: 18px 20px; */
+    margin: auto;
     box-sizing: border-box;
     background-color: var(--bg-color);
 }
 
 .main-content {
-    width: min(1360px, 100%);
-    height: min(90vh, 980px);
+    width: 100%;
+    max-height: 980px ;
+    /* height: min(90vh, 980px); */
     display: flex;
+    flex-direction: row;
+    padding: auto;
     gap: 22px;
-    min-width: 0;
-    min-height: 0;
-    padding: 40px 25px 10px 25px;
+    
+    /* padding: 40px 25px 10px 25px; */
     box-sizing: border-box;
-    align-items: flex-start;
-    justify-self: center;
-    align-self: center;
-    transform: translateX(calc((var(--aside-left) + var(--aside-width) + var(--aside-gap)) / 2));
+    justify-content: center;
+    align-content: center;
+
+    /* transform: translateX(calc((var(--aside-left) + var(--aside-width) + var(--aside-gap)) / 2)); */
     transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
@@ -54,16 +64,26 @@
     visibility: visible;
 }
 
-.aside {
-    position: fixed;
-    left: var(--aside-left);
-    top: 18px;
-    width: var(--aside-width);
+
+.aside-cont {
     display: flex;
+    width: 100%;
+
+}
+
+
+.aside {
+    /* position: fixed; */
+    /* left: var(--aside-left);
+    top: 18px; */
+    /* width: var(--aside-width); */
+    display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    z-index: 10;
+    /* z-index: 10; */
+    
 }
 
 .aside {
@@ -79,7 +99,8 @@
     display: grid;
     place-items: center;
     padding: 0;
-    margin-top: 10px;
+    margin: 10px;
+    /* margin-top: 10px; */
     width: 30px;
     height: 30px;
 }
@@ -92,8 +113,11 @@
 
 .menuIcons {
     display: flex;
+    position: absolute;
+    z-index: 10;
     flex-direction: column;
     gap: 30px;
+    margin-top: 50px;
     pointer-events: none;
 }
 
@@ -131,22 +155,22 @@
 .asideOpen .iconBtn:nth-child(3) { transition-delay: 0.3s; }
 
 .left-content {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     min-width: 0;
+    width: 650px;
     gap: 15px;
-    border-radius: 16px;
     box-sizing: border-box;
     align-self: stretch;
 }
 
 .agent-office {
     border-radius: 10px;
+    object-fit: contain;
     overflow: hidden;
-    height: 350px;
     width: 100%;
+    height: 350px;
 }
 
 .console {
@@ -156,19 +180,21 @@
 .calendar {
     display: flex;
     height: 495px;
-    justify-content: flex-start;
-    align-items: flex-start;
+    
+    /* justify-content: flex-start;
+    align-items: flex-start; */
 }
 
 .right-content {
     display: flex;
     flex-direction: column;
-    min-width: 0;
-    height: 495px;
+    align-items: flex-start;
+    /* min-width: 0; */
+    /* height: 495px; */
     gap: 16px;
-    border-radius: 16px;
     padding: 0;
     box-sizing: border-box;
+    align-self: stretch;
 }
 
 .add-btn {
@@ -182,6 +208,14 @@
     place-items: center;
     overflow: hidden;
     padding: 0;
+}
+
+.bottom-bar {
+    display: flex;
+    border: 2px solid var(--pink);
+    width: 100%;
+    padding-left: 500px;
+    gap: 16px;
 }
 
 .add-btn img {

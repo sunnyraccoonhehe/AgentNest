@@ -1,0 +1,258 @@
+
+.fixed-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.7);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	z-index: 100;
+	box-shadow: 0 2px 10px rgba(62, 61, 61, 0.3);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	min-width: 0;
+}
+
+.aside-cont {
+	display: flex;
+	width: 100%;
+	max-width: 1300px;
+	margin: 0 auto;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	min-width: 0;
+}
+
+
+.aside {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+}
+
+.asideMobile {
+    margin: 0 10px;
+    width: 100%;
+    display: flex;
+	position: relative;
+	flex-direction: row;
+    justify-content: space-between;
+	align-items: center;
+}
+
+.setting-btn, 
+.burg-btn  {
+	background: none;
+	border: none;
+	cursor: pointer;
+	z-index: 101;
+	transition: transform 0.3s ease;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+}
+
+.calendar-btn {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    gap: 0px;
+    padding: 0;
+    border-radius: 5px;
+}
+
+.weekday {
+    font-size: 6px;
+    line-height: 1;
+    margin-bottom: -0.5px;
+}
+
+.day {
+    font-size: 17px;
+    line-height: 1;
+}
+
+.burg-btn img {
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+
+.left-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.menuIcons {
+	display: flex;
+	position: absolute;
+	z-index: 10;
+	flex-direction: column;
+	gap: 30px;
+	margin-top: 50px;
+	background-color: rgba(0, 0, 0, 0.9);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	
+	/* Начальное состояние (скрыто) */
+	opacity: 0;
+	visibility: hidden;
+	transform: translateX(-20px) scale(0.95);
+	
+	/* Анимация */
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	
+	/* Запрещаем взаимодействие в скрытом состоянии */
+	pointer-events: none;
+}
+.menuIconsOpen {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(0) scale(1);
+	pointer-events: auto;
+}
+
+/* MOBILE MENU */
+
+.menuIconsMobile {
+	position: absolute;
+	top: 70px;
+	right: 23px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+
+	background-color: rgba(0, 0, 0, 0.9);
+
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+
+	padding: 10px;
+	border-radius: 14px;
+
+	border: 1px solid rgba(255, 255, 255, 0.1);
+
+	z-index: 10;
+
+	opacity: 0;
+	visibility: hidden;
+
+	transform: translateX(20px) scale(0.95);
+
+	pointer-events: none;
+
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease,
+		visibility 0.3s ease;
+}
+
+.menuIconsMobileOpen {
+	opacity: 1;
+	visibility: visible;
+
+	transform: translateX(0) scale(1);
+
+	pointer-events: auto;
+}
+
+.menuIconsMobile .iconBtn {
+	opacity: 0;
+
+	transform: translateX(10px);
+
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.menuIconsMobileOpen .iconBtn {
+	opacity: 1;
+
+	transform: translateX(0);
+}
+
+.asideOpen .menuIcons {
+	pointer-events: auto;
+}
+
+.iconBtn {
+	width: 30px;
+	height: 30px;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	display: grid;
+	place-items: center;
+	
+	/* Начальное состояние */
+	opacity: 0;
+	transform: translateX(-10px);
+	
+	/* Анимация */
+	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.menuIconsOpen .iconBtn {
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.menuIconsOpen .iconBtn:nth-child(1) { 
+	transition-delay: 0.05s; 
+}
+.menuIconsOpen .iconBtn:nth-child(2) { 
+	transition-delay: 0.1s; 
+}
+.menuIconsOpen .iconBtn:nth-child(3) { 
+	transition-delay: 0.15s; 
+}
+
+
+.menuIconsMobileOpen .iconBtn:nth-child(1) {
+	transition-delay: 0.15s;
+}
+
+.menuIconsMobileOpen .iconBtn:nth-child(2) {
+	transition-delay: 0.1s;
+}
+
+.menuIconsMobileOpen .iconBtn:nth-child(3) {
+	transition-delay: 0.05s;
+}
+
+
+.iconBtn:hover {
+	transform: scale(1.1);
+	transition: transform 0.2s ease;
+}
+
+.iconBtn img {
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+
+.asideOpen .iconBtn {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.asideOpen .iconBtn:nth-child(1) { transition-delay: 0.1s; }
+.asideOpen .iconBtn:nth-child(2) { transition-delay: 0.2s; }
+.asideOpen .iconBtn:nth-child(3) { transition-delay: 0.3s; }

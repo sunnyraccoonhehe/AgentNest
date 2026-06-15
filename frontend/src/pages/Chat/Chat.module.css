@@ -1,0 +1,12 @@
+.container {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+
+  background: #050505;
+  color: white;
+
+  overflow: hidden;
+
+  font-family: Inter, sans-serif;
+}

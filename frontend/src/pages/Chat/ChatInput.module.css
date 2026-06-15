@@ -1,0 +1,69 @@
+.wrapper {
+  padding: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(20px);
+
+  flex-shrink: 0;
+}
+
+.iconButton {
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  cursor: pointer;
+}
+
+.input {
+  flex: 1;
+
+  height: 48px;
+
+  border-radius: 18px;
+
+  background: #111111;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 0 16px;
+
+  color: white;
+
+  font-size: 14px;
+
+  outline: none;
+}
+
+.input::placeholder {
+  color: #777777;
+}
+
+.sendButton {
+  border: none;
+
+  height: 48px;
+
+  padding: 0 18px;
+
+  border-radius: 18px;
+
+  background: white;
+
+  color: black;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}

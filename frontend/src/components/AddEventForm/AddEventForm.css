@@ -1,0 +1,121 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #1C1A1B;
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  background: #2a2a2a;
+  color: white;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: #ffffff;
+}
+
+.modal-content textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.time-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.time-input-group {
+  flex: 1;
+}
+
+.time-input-group label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.time-input-group input {
+  margin-bottom: 0;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.modal-buttons button[type="submit"] {
+  background: #987474;
+  color: white;
+}
+
+.modal-buttons button[type="button"] {
+  background: #333;
+  color: white;
+}
+
+.modal-buttons button[type="submit"]:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.modal-buttons button[type="button"]:hover {
+  background: #444;
+}
+
+.error-message {
+  background: black;
+  border: 1px solid #ffffff;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 14px;
+}

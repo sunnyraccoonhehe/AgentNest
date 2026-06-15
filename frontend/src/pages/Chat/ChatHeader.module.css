@@ -1,0 +1,39 @@
+.header {
+  padding: 20px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(20px);
+
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #8d8d8d;
+
+  margin-top: 4px;
+}
+
+.menuButton {
+  width: 44px;
+  height: 44px;
+
+  border: none;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: white;
+
+  cursor: pointer;
+}

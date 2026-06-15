@@ -1,0 +1,434 @@
+/* Глобальные стили */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.full-screen {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: var(--bg-color);
+    transition: background-color 0.5s ease;
+    overflow-x: hidden;
+}
+
+.full-screen.final-stage {
+    background-color: var(--bg-color);
+}
+
+.rhombus-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.rhombus-svg {
+    width: 120px;
+    height: auto;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.6s ease-out, opacity 0.4s ease;
+    will-change: transform;
+}
+
+.rhombus-svg.shown {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.rhombus-svg.expanded {
+    transform: scale(500);
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+.final-stage .rhombus-svg {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 120;
+    padding: 20px;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.top-icons {
+    display: flex;
+    gap: 50px;
+    padding: 30px 40px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: auto;
+}
+
+.icon {
+    width: 30px;
+    height: auto;
+    transition: transform 0.2s ease;
+}
+
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.auth {
+    position: static;
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 18px;
+    color: var(--au-text-color);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    pointer-events: auto;
+    padding: 30px 40px;
+}
+
+.auth a {
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--au-text-color);
+    transition: color 0.3s ease;
+}
+
+.auth a:hover {
+    text-decoration: underline;
+}
+
+.final-stage .auth {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.final-stage .top-icons {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.logo-wrapper {
+    position: relative;
+    width: 500px;
+    height: auto;
+    opacity: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    transform: translateY(-100px);
+    transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.42, 1.1), opacity 0.3s ease-out;
+}
+
+.logo-wrapper.falling {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.logo-wrapper.move-up {
+    transform: translateY(-50px);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.4s ease;
+}
+
+.logo.black {
+    position: relative;
+    opacity: 1;
+}
+
+.logo.pink {
+    opacity: 0;
+}
+
+.switched .logo.black {
+    opacity: 0;
+}
+
+.switched .logo.pink {
+    opacity: 1;
+}
+
+.main-button {
+    position: relative;
+    margin-top: 40px;
+    padding: 16px 18px;
+    font-family: 'SF Pro Display', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #000;
+    background: linear-gradient(to right, var(--pink) 0%, white 100%);
+    border: none;
+    border-radius: 7px;
+    width: 380px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 110;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    white-space: nowrap;
+}
+
+.main-button.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.main-button:hover {
+    background: var(--shadow-pink);
+    transform: translateY(-2px);
+}
+
+/* ========== АДАПТИВ ========== */
+@media screen and (max-width: 1024px) {
+    .logo-wrapper {
+        width: 400px;
+    }
+
+    .main-button {
+        width: 320px;
+        height: 55px;
+        font-size: 20px;
+    }
+
+    .top-icons {
+        gap: 35px;
+        padding: 20px 30px;
+    }
+
+    .icon {
+        width: 25px;
+    }
+
+    .auth {
+        font-size: 16px;
+        padding: 20px 30px;
+    }
+
+    .rhombus-svg {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .full-screen {
+        justify-content: center;
+        padding: 80px 20px;
+    }
+    
+    .logo-wrapper {
+        width: 300px;
+    }
+
+    .main-button {
+        width: 280px;
+        height: 50px;
+        font-size: 18px;
+        margin-top: 30px;
+    }
+
+    .top-icons {
+        gap: 25px;
+        padding: 15px 20px;
+    }
+
+    .icon {
+        width: 22px;
+    }
+
+    .auth {
+        font-size: 14px;
+        padding: 15px 20px;
+    }
+
+    .rhombus-svg {
+        width: 80px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .full-screen {
+        padding: 60px 15px;
+    }
+    
+    .logo-wrapper {
+        width: 250px;
+    }
+
+    .main-button {
+        width: 240px;
+        height: 45px;
+        font-size: 16px;
+        margin-top: 25px;
+    }
+
+    .top-icons {
+        gap: 20px;
+        padding: 12px 15px;
+    }
+
+    .icon {
+        width: 20px;
+    }
+
+    .auth {
+        font-size: 12px;
+        padding: 12px 15px;
+    }
+
+    .rhombus-svg {
+        width: 60px;
+    }
+
+    .main-button {
+        white-space: normal;
+        padding: 12px;
+        line-height: 1.2;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .logo-wrapper {
+        width: 200px;
+    }
+
+    .main-button {
+        width: 200px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .top-icons {
+        gap: 15px;
+        padding: 10px 12px;
+    }
+
+    .icon {
+        width: 18px;
+    }
+
+    .auth {
+        font-size: 10px;
+        padding: 10px 12px;
+    }
+
+    .rhombus-svg {
+        width: 50px;
+    }
+}
+
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    .full-screen {
+        padding: 40px 20px;
+    }
+    
+    .logo-wrapper {
+        width: 200px;
+    }
+
+    .main-button {
+        width: 200px;
+        height: 40px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .top-icons {
+        padding: 8px 15px;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .logo-wrapper {
+        width: 600px;
+    }
+
+    .main-button {
+        width: 450px;
+        height: 70px;
+        font-size: 28px;
+    }
+
+    .icon {
+        width: 35px;
+    }
+
+    .auth {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    .logo-wrapper {
+        width: 800px;
+    }
+
+    .main-button {
+        width: 600px;
+        height: 80px;
+        font-size: 32px;
+    }
+
+    .icon {
+        width: 45px;
+    }
+
+    .auth {
+        font-size: 24px;
+    }
+
+    .rhombus-svg {
+        width: 150px;
+    }
+}
+
+/* ========== СВЕТЛАЯ ТЕМА ========== */
+.full-screen.light-theme .logo.pink {
+    filter: brightness(0);
+    opacity: 1;
+}
+
+.full-screen.light-theme .logo.black {
+    opacity: 0;
+}
+
+.full-screen:not(.light-theme) .logo.pink {
+    filter: none;
+}
+
+/* Улучшаем кликабельность на мобильных */
+@media screen and (max-width: 768px) {
+    .main-button,
+    .icon,
+    .auth a {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+}

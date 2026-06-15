@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ae6bb7c8-0983-4f72-a4bf-56450dd71340" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/acorn.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/baseline-browser-mapping.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/browserslist.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/eslint.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/giget.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jiti.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/js-yaml.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/jsesc.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/json5.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/loose-envify.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nanoid.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/node-which.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/nypm.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/parser.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/prisma.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/rolldown.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/semver.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsc.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/tsserver.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/update-browserslist-db.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.bin/vite.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/node_modules/.vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/node_modules/.vite/deps/_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Console/Console.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Console/Console.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="backend" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EU7MvWnJZJEUEVXPCOEINMjeN7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build backend.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AgentNestApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/lirika/Documents/workin/AgentNest/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="AgentNestApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="backend.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.agentnest.AgentNestApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.agentnest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.AgentNestApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ae6bb7c8-0983-4f72-a4bf-56450dd71340" name="Changes" comment="" />
+      <created>1780221249988</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1780221249988</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

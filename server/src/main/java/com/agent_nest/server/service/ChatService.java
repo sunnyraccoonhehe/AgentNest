@@ -71,7 +71,7 @@ public class ChatService {
         Map<String, Object> body = Map.of(
                 "model", "llama-3.3-70b-versatile",
                 "messages", messages,
-                "max_tokens", 4000
+                "max_tokens", 1200
         );
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
@@ -145,6 +145,7 @@ public class ChatService {
                     eventService.createEvent(userId, request);
                 }
                 case "UPDATE" -> {
+
                 }
                 case "CREATE_RECURRING" -> {
                     String title = (String) action.get("title");
@@ -242,4 +243,8 @@ public class ChatService {
     public List<ChatMessage> getHistory(Long userId) {
         return chatMessageRepo.findTop10ByUserIdOrderByCreatedAtDesc(userId);
     }
+    public List<ChatMessage> getFullHistory(Long userId) {
+        return chatMessageRepo.findByUserIdOrderByCreatedAtAsc(userId);
+    }
+
 }

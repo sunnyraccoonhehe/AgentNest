@@ -11,4 +11,6 @@ public interface ChatMessageRepo
         extends JpaRepository<ChatMessage, Long> {
 
     List<ChatMessage> findTop10ByUserIdOrderByCreatedAtDesc(Long userId);
+
+    List<ChatMessage> findByUserIdOrderByCreatedAtAsc(Long userId);
 }

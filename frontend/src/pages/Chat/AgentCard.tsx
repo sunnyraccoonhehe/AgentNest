@@ -6,6 +6,7 @@ interface AgentCardProps {
 }
 
 export default function AgentCard({ agent }: AgentCardProps) {
+  
   return (
     <div
       className={`${styles.card} ${
@@ -13,7 +14,6 @@ export default function AgentCard({ agent }: AgentCardProps) {
       }`}
     >
       <div className={styles.avatar}>{agent.avatar}</div>
-
       <div>
         <div className={styles.name}>{agent.name}</div>
         <div className={styles.status}>{agent.status}</div>

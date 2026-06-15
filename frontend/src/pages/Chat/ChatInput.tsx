@@ -23,7 +23,7 @@ export default function ChatInput({
     <div className={styles.wrapper}>
       <input
         className={styles.input}
-        placeholder='Ask the agents anything...'
+        placeholder='Как провести каникулы..'
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
@@ -37,7 +37,7 @@ export default function ChatInput({
         className={styles.sendButton}
         onClick={handleSend}
       >
-        Send
+        Отправить
       </button>
     </div>
   );

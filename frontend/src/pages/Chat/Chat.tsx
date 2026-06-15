@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
+import { sendMessage, fetchHistory } from '../../features/chat/chatSlice';
 
 import styles from './Chat.module.css';
 
@@ -9,106 +10,66 @@ import ChatInput from './ChatInput';
 
 import type { Agent, Message } from '../../types/types';
 
-import { useEffect } from 'react';
-import { loadMessages, saveMessages } from './messageUtil';
+import { useEffect, useMemo } from 'react';
 
 export default function ChatScreen() {
-	const agents: Agent[] = [
-		{
+
+	const dispatch = useAppDispatch();
+	const status = useAppSelector((state) => state.chat.status);
+
+	const agentStatus =
+		status === 'pending'
+			? 'Печатает...'
+			: status === 'rejected'
+			? 'Ошибка'
+			: 'Готова';
+
+	const messages = useAppSelector((state) => state.chat.history);
+	const uiMessages: Message[] = messages.map((msg) => ({
+		id: msg.id,
+		sender: msg.agent === 'user' ? 'You' : 'Nova',
+		role: msg.agent,
+		text: msg.text,
+		time: new Date(msg.timestamp).toLocaleTimeString([], {
+			hour: '2-digit',
+			minute: '2-digit',
+		}),
+		isOwn: msg.agent === 'user',
+		avatar: msg.agent === 'user' ? '👤' : '🧠',
+
+	}));
+
+	const loading = useAppSelector((state) => state.chat.loading);
+
+	const agents = useMemo<Agent[]>(() => [
+	{
 		name: 'Nova',
-		status: 'Thinking',
-		avatar: '🧠',
+		status: agentStatus,
+		avatar: status === 'pending' ? '⚡' : '😱',
 		active: true,
-		},
-		{
-		name: 'Misha',
-		status: 'Chilling',
-		avatar: '🥰',
-		active: true,
-		},
-		{
-		name: 'Alisa',
-		status: 'Waiting',
-		avatar: '😱',
-		active: true,
-		},
-	];
-
-	const [messages, setMessages] = useState<Message[]>(() => {
-		const cached = loadMessages();
-		return cached?.length ? cached : [
-		{
-			id: 1,
-			sender: 'Nova',
-			role: 'Strategy Agent',
-			text: 'How can I help?',
-			time: new Date().toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-			}),
-			isOwn: false,
-			avatar: '🧠',
-			},
-		];
-	});
+	},
+	], [agentStatus, status]);
 
 	useEffect(() => {
-		const cached = loadMessages();
+		dispatch(fetchHistory());
+	}, [dispatch]);
 
-		if (cached?.length) {
-			setMessages(cached);
-		}
-		}, []);
 
-	useEffect(() => {
-		saveMessages(messages);
-	}, [messages]);
-
-	const sendMessage = (text: string) => {
+	const sendMessageHandler = (text: string) => {
 		if (!text.trim()) return;
 
-		const newMessage: Message = {
-			id: Date.now(),
-			sender: 'You',
-			role: 'Operator',
-			text,
-			time: new Date().toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-			}),
-			isOwn: true,
-			avatar: '👤',
-		};
-
-		setMessages((prev) => [...prev, newMessage]);
-
-		setTimeout(() => {
-			const aiReply: Message = {
-			id: Date.now() + 1,
-			sender: 'Nova',
-			role: 'Strategy Agent',
-			text: 'Processing your request...',
-			time: new Date().toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-			}),
-			isOwn: false,
-			avatar: '🧠',
-			};
-
-			setMessages((prev) => [...prev, aiReply]);
-		}, 1200);
+		dispatch(sendMessage(text));
 	};
-
+console.log(agents[0].status)
 	return (
 	<div className={styles.container}>
 	<ChatHeader />
 
 	<AgentsList agents={agents} />
 
-	<MessagesList messages={messages} />
+	<MessagesList messages={uiMessages} loading={loading}/>
 
-	<ChatInput onSend={sendMessage} />
+	<ChatInput onSend={sendMessageHandler} />
 	</div>
 	);
 }

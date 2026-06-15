@@ -24,7 +24,7 @@ type RejectValue = ApiError;
 export const fetchEvents = createAsyncThunk<
 
 	Event[],
-	number, // Изменено: теперь принимает userId
+	void,
 	{ rejectValue: RejectValue }
 
 >('events/fetchAll', async (_, { rejectWithValue }) => {
@@ -143,7 +143,7 @@ export const fetchEventsByMonth = createAsyncThunk<
 		const apiError = error as { response?: { data: ApiError } };
 		return rejectWithValue(apiError.response?.data as ApiError);
   	}
-	
+
 });
 
 export const searchEvents = createAsyncThunk<

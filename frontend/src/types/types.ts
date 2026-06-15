@@ -87,7 +87,7 @@ export interface Agent {
 }
 
 export interface Message {
-  id: number;
+  id: number | string;
   sender: string;
   role: string;
   text: string;
@@ -98,7 +98,7 @@ export interface Message {
 
 export interface ConsoleMessage {
   id: string;
-  agent: string;
+  agent: 'user' | 'assistant';
   agentColor?: string;
   text: string;
   timestamp: Date | string;

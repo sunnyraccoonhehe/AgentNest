@@ -25,7 +25,7 @@ const formatTime = (date: Date | string) =>
 	new Date(date).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
 const DEMO_MESSAGES: ConsoleMessage[] = [
-	{ id: '1', agent: 'Alise', text: 'Привет! Напиши запрос и я помогу тебе оптимизировать твое время!', timestamp: new Date(Date.now() - 12000), type: 'info' },
+	{ id: '1', agent: 'assistant', text: 'Привет! Напиши запрос и я помогу тебе оптимизировать твое время!', timestamp: new Date(Date.now() - 12000), type: 'info' },
 ];
 
 const Console: React.FC<ConsoleProps> = ({ messages: externalMessages, onSend }) => {

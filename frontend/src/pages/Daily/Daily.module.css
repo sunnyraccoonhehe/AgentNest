@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 400;
   color: #fff;
   transition: background 0.2s, color 0.2s;
@@ -159,7 +159,7 @@
 
 /* ── Mini calendar ── */
 .miniCal {
-  margin: 20px 16px 0;
+  margin: 20px 16px;
   background: #1C1C1E;
   border-radius: 18px;
   padding: 16px 12px;
@@ -168,12 +168,12 @@
 .calGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px 0;
+  gap: 7px 0;
   text-align: center;
 }
 
 .calHeader {
-  font-size: 12px;
+  font-size: 20px;
   color: #666;
   font-weight: 600;
   padding-bottom: 6px;
@@ -187,7 +187,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  font-size: 14px;
+  font-size: 20px;
   cursor: pointer;
   transition: background 0.15s;
   color: #fff;
@@ -239,12 +239,12 @@
 }
 
 .eventLabel {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 500;
 }
 
 .eventTime {
-  font-size: 13px;
+  font-size: 10px;
   color: #888;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
@@ -267,4 +267,150 @@
 
 .addIcon {
   font-size: 18px;
+}
+
+.calNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px 8px;
+}
+
+.calNavTitle {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.calNavBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background 0.15s;
+}
+
+.calNavBtn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.calNavBtn:active {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.calCell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.calDot {
+    width: 5px;
+    height: 4px;
+    border-radius: 50%;
+    background: #948e8f;
+}
+
+.calDotSelected {
+    background: #fff;
+}
+
+.eventRight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.deleteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
+}
+
+.deleteBtn:hover {
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.08);
+}
+
+.confirmOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    z-index: 100;
+}
+
+.confirmModal {
+    background: #1C1C1E;
+    border-radius: 16px;
+    padding: 24px 20px 16px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.confirmText {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    color: #fff;
+}
+
+.confirmButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.confirmCancel {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #2A2A2A;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.confirmCancel:hover {
+    background: #333;
+}
+
+.confirmDelete {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #ff4d4d;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.confirmDelete:hover {
+    background: #e03c3c;
 }

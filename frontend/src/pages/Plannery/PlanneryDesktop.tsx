@@ -28,7 +28,7 @@ function PlanneryDesktop() {
 
 			addMessage({
 				id: Date.now().toString(),
-				agent: 'Alise',
+				agent: 'assistant',
 				agentColor: '#fe88f2',
 				text: reply,
 				timestamp: new Date(),
@@ -43,7 +43,7 @@ function PlanneryDesktop() {
 		} catch {
 			addMessage({
 				id: Date.now().toString(),
-				agent: 'Alise',
+				agent: 'assistant',
 				agentColor: '#f87171',
 				text: 'Ошибка соединения с ИИ',
 				timestamp: new Date(),

@@ -10,8 +10,8 @@ export default function ChatHeader() {
 			<IoChevronBack size={20} />
 		</div>
 		<div>
-		<h1 className={styles.title}>AI Agents Hub</h1>
-		<p className={styles.subtitle}>3 active agents collaborating</p>
+		<h1 className={styles.title}>AI чатик</h1>
+		<p className={styles.subtitle}>Нова к Вашим услугам</p>
 		</div>
 
 		<button className={styles.menuButton}>⋯</button>

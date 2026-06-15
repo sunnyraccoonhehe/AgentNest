@@ -22,7 +22,6 @@ public class ChatController {
 
     private final ChatService chatService;
     private final UserService userService;
-    private final ChatMessageRepo chatMessageRepo;
 
     @PostMapping
     public ResponseEntity<ChatResponse> chat(
@@ -43,6 +42,16 @@ public class ChatController {
         String email = userDetails.getUsername();
         User user = userService.findByEmail(email);
 
-        return ResponseEntity.ok(chatService.getHistory(user.getId()));
+        return ResponseEntity.ok(chatService.getFullHistory(user.getId()));
+    }
+
+    @GetMapping("/history/full")
+    public ResponseEntity<List<ChatMessage>> getFullHistory(
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String email = userDetails.getUsername();
+        User user = userService.findByEmail(email);
+
+        return ResponseEntity.ok(chatService.getFullHistory(user.getId()));
     }
 }

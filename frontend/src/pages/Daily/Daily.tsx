@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Daily.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import AddEventForm from "../../components/AddEventForm/AddEventForm";
+import { useNavigate } from "react-router-dom";
+import useIsMobile from "../../hooks/useIsMobile";
+import { fetchEvents, deleteEvent } from "../../features/events/eventsSlice";
+import { MdChevronLeft, MdChevronRight, MdDeleteOutline } from "react-icons/md";
 
 const DAYS_SHORT = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 const MONTHS = [
 	"Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
 	"Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря",
+];
+const MONTHS_NOM = [
+	"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+	"Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
 ];
 
 function monWeekday(date: Date): number {
@@ -57,20 +65,43 @@ interface DailyProps {
 
 export default function Daily({ selectedDate: propDate, onBack, isCalView = true, customHeight, customWidth }: DailyProps) {
 	const dispatch = useAppDispatch();
-	const { events } = useAppSelector(state => state.events);
-	
+
+	useEffect(() => {
+		dispatch(fetchEvents());
+	}, [dispatch]);
+
+	const { events, loading } = useAppSelector(state => state.events);
+
+	const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
+
+	const handleDeleteEvent = async (eventId: number) => {
+		await dispatch(deleteEvent(eventId));
+    	setDeleteConfirm(null);
+	};
+
+	const navigate = useNavigate();
+	const isMobile = useIsMobile();
+
 	const today = new Date();
 	const [selectedDate, setSelectedDate] = useState<Date>(propDate ?? today);
 	const [showAddForm, setShowAddForm] = useState(false);
+
+	// Отдельное состояние для отображаемого месяца в календаре
+	const [calViewDate, setCalViewDate] = useState<Date>(() => {
+		const d = propDate ?? today;
+		return new Date(d.getFullYear(), d.getMonth(), 1);
+	});
+
 	const weekDays = getCurrentWeekDays(selectedDate);
 
-	// Загружаем события при изменении д
-
-	// Фильтруем события для выбранной даты
 	const dayEvents = events.filter(event => {
 		const eventDate = new Date(event.startTime);
 		return isSameDay(eventDate, selectedDate);
 	});
+
+	const hasEvents = (date: Date): boolean => {
+		return events.some(event => isSameDay(new Date(event.startTime), date));
+	};
 
 	const handleBack = () => {
 		if (onBack) onBack();
@@ -80,8 +111,17 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 		setShowAddForm(true);
 	};
 
-	const calYear = selectedDate.getFullYear();
-	const calMonth = selectedDate.getMonth();
+	// Навигация по месяцам
+	const handlePrevMonth = () => {
+		setCalViewDate(d => new Date(d.getFullYear(), d.getMonth() - 1, 1));
+	};
+
+	const handleNextMonth = () => {
+		setCalViewDate(d => new Date(d.getFullYear(), d.getMonth() + 1, 1));
+	};
+
+	const calYear = calViewDate.getFullYear();
+	const calMonth = calViewDate.getMonth();
 	const daysInMonth = getDaysInMonth(calYear, calMonth);
 	const firstDay = getFirstDayOfMonth(calYear, calMonth);
 
@@ -90,14 +130,12 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 		...Array.from({ length: daysInMonth }, (_, i) => i + 1),
 	];
 
-	// Форматирование времени для отображения
 	const formatEventTime = (event: any) => {
 		const start = new Date(event.startTime);
 		const end = new Date(event.endTime);
 		return `${start.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}–${end.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}`;
 	};
 
-	// Получение иконки по названию события
 	const getEventIcon = (title: string) => {
 		if (title.toLowerCase().includes('встреч')) return '👥';
 		if (title.toLowerCase().includes('отчет')) return '📊';
@@ -110,16 +148,15 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 	};
 
 	return (
-		<div className={styles.planner} style={
-			{
-				maxHeight: customHeight ? `${customHeight}px` : '100%',
-				maxWidth: customWidth ? `${customWidth}px` : '100%',
-				overflowY: 'auto'
-			}}>
+		<div className={styles.planner} style={{
+			maxHeight: customHeight ? `${customHeight}px` : '100%',
+			maxWidth: customWidth ? `${customWidth}px` : '100%',
+			overflowY: 'auto'
+		}}>
 
 			<div className={styles.header}>
 				<div className={styles.headerLeft}>
-					<button className={styles.backBtn} onClick={handleBack}>‹</button>
+					<button className={styles.backBtn} onClick={isMobile ? () => navigate(-1) : handleBack}><MdChevronLeft/></button>
 					<div>
 						<span className={styles.titleDate}>
 							{selectedDate.getDate()} {MONTHS[selectedDate.getMonth()]}
@@ -137,24 +174,11 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 						styles.weekNum,
 						isToday ? styles.weekNumToday : "",
 						!isToday && isSelected ? styles.weekNumSelected : "",
-					]
-						.filter(Boolean)
-						.join(" ");
+					].filter(Boolean).join(" ");
 
 					return (
-						<div
-							key={i}
-							className={styles.weekDay}
-							onClick={() => setSelectedDate(new Date(day))}
-						>
-							<span
-								className={[
-									styles.weekLabel,
-									isToday ? styles.weekLabelToday : "",
-								]
-									.filter(Boolean)
-									.join(" ")}
-							>
+						<div key={i} className={styles.weekDay} onClick={() => setSelectedDate(new Date(day))}>
+							<span className={[styles.weekLabel, isToday ? styles.weekLabelToday : ""].filter(Boolean).join(" ")}>
 								{DAYS_SHORT[i]}
 							</span>
 							<div className={numClass}>{day.getDate()}</div>
@@ -176,6 +200,15 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 
 			{isCalView && (
 				<div className={styles.miniCal}>
+					{/* Шапка с навигацией по месяцам */}
+					<div className={styles.calNav}>
+						<button className={styles.calNavBtn} onClick={handlePrevMonth}><MdChevronLeft size={22}/></button>
+						<span className={styles.calNavTitle}>
+							{MONTHS_NOM[calMonth]} {calYear}
+						</span>
+						<button className={styles.calNavBtn} onClick={handleNextMonth}><MdChevronRight size={22}/></button>
+					</div>
+
 					<div className={styles.calGrid}>
 						{DAYS_SHORT.map((d) => (
 							<div key={d} className={styles.calHeader}>{d}</div>
@@ -186,14 +219,13 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 							const cellDate = new Date(calYear, calMonth, cell);
 							const isToday = isSameDay(cellDate, today);
 							const isSelected = isSameDay(cellDate, selectedDate);
+							const hasEvent = hasEvents(cellDate);  // ← новое
 
 							const cellClass = [
 								styles.calCell,
 								isToday && !isSelected ? styles.calCellToday : "",
 								isSelected ? styles.calCellSelected : "",
-							]
-								.filter(Boolean)
-								.join(" ");
+							].filter(Boolean).join(" ");
 
 							return (
 								<div
@@ -202,6 +234,12 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 									onClick={() => setSelectedDate(cellDate)}
 								>
 									{cell}
+									{hasEvent && (        // ← новое
+										<span className={[
+											styles.calDot,
+											isSelected ? styles.calDotSelected : "",
+										].filter(Boolean).join(" ")} />
+									)}
 								</div>
 							);
 						})}
@@ -227,12 +265,17 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 								<span className={styles.eventIcon}>{getEventIcon(event.title)}</span>
 								<span className={styles.eventLabel}>{event.title}</span>
 							</div>
-							<span
-								className={styles.eventTime}
-								style={{ color: event.color || '#F4A7B9' }}
-							>
-								{formatEventTime(event)}
-							</span>
+							<div className={styles.eventRight}>
+								<span className={styles.eventTime} style={{ color: event.color || '#F4A7B9' }}>
+									{formatEventTime(event)}
+								</span>
+								<button
+									className={styles.deleteBtn}
+    								onClick={() => setDeleteConfirm(event.id)}
+								>
+									<MdDeleteOutline size={18} />
+								</button>
+							</div>
 						</div>
 					))
 				)}
@@ -243,10 +286,31 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 			</div>
 
 			{showAddForm && (
-				<AddEventForm 
-					onClose={() => setShowAddForm(false)} 
+				<AddEventForm
+					onClose={() => setShowAddForm(false)}
 					selectedDate={selectedDate}
 				/>
+			)}
+			{deleteConfirm !== null && (
+				<div className={styles.confirmOverlay} onClick={() => setDeleteConfirm(null)}>
+					<div className={styles.confirmModal} onClick={e => e.stopPropagation()}>
+						<p className={styles.confirmText}>Удалить задачу?</p>
+						<div className={styles.confirmButtons}>
+							<button
+								className={styles.confirmCancel}
+								onClick={() => setDeleteConfirm(null)}
+							>
+								Отмена
+							</button>
+							<button
+								className={styles.confirmDelete}
+								onClick={() => handleDeleteEvent(deleteConfirm)}
+							>
+								Удалить
+							</button>
+						</div>
+					</div>
+				</div>
 			)}
 		</div>
 	);

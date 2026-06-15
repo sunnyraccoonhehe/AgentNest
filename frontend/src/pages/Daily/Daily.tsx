@@ -70,7 +70,7 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 		dispatch(fetchEvents());
 	}, [dispatch]);
 
-	const { events, loading } = useAppSelector(state => state.events);
+	const { events } = useAppSelector(state => state.events);
 
 	const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
 

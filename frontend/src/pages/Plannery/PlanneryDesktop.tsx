@@ -16,7 +16,7 @@ function PlanneryDesktop() {
 	const dispatch = useAppDispatch();
 	const { events } = useAppSelector(state => state.events);
 
-	const { loading, history } = useAppSelector(state => state.chat);
+	const { history } = useAppSelector(state => state.chat);
 
 	useEffect(() => {
 		dispatch(fetchHistory());

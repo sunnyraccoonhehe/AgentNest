@@ -164,10 +164,17 @@
 }
 
 .calendar {
-	display: flex;
-	flex: 1;
-	justify-content: center;
-	min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 380px;
+  height: 495px;
+  background: #0c0b0c;
+  outline: 1px solid pink;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 .add-btn {

@@ -18,7 +18,6 @@ const AddEventForm: React.FC<AddEventFormProps> = ({ onClose, selectedDate }) =>
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 
-	// Форматируем дату для input (если есть selectedDate)
 	const formatDate = (date: Date) => {
 		const y = date.getFullYear();
 		const m = String(date.getMonth() + 1).padStart(2, '0');

@@ -64,6 +64,9 @@ interface DailyProps {
 }
 
 export default function Daily({ selectedDate: propDate, onBack, isCalView = true, customHeight, customWidth }: DailyProps) {
+
+	const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
+
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -76,7 +79,7 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 
 	const handleDeleteEvent = async (eventId: number) => {
 		await dispatch(deleteEvent(eventId));
-    	setDeleteConfirm(null);
+		setDeleteConfirm(null);
 	};
 
 	const navigate = useNavigate();
@@ -86,7 +89,6 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 	const [selectedDate, setSelectedDate] = useState<Date>(propDate ?? today);
 	const [showAddForm, setShowAddForm] = useState(false);
 
-	// Отдельное состояние для отображаемого месяца в календаре
 	const [calViewDate, setCalViewDate] = useState<Date>(() => {
 		const d = propDate ?? today;
 		return new Date(d.getFullYear(), d.getMonth(), 1);
@@ -111,7 +113,6 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 		setShowAddForm(true);
 	};
 
-	// Навигация по месяцам
 	const handlePrevMonth = () => {
 		setCalViewDate(d => new Date(d.getFullYear(), d.getMonth() - 1, 1));
 	};
@@ -258,12 +259,22 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 					dayEvents.map((event) => (
 						<div
 							key={event.id}
-							className={styles.eventCard}
+							className={`${styles.eventCard} ${expandedEvent === event.id ? styles.eventCardExpanded : ''}`}
 							style={{ borderColor: event.color || '#F4A7B9' }}
+							onClick={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
 						>
 							<div className={styles.eventLeft}>
 								<span className={styles.eventIcon}>{getEventIcon(event.title)}</span>
+								<div className={styles.eventInfo}>
 								<span className={styles.eventLabel}>{event.title}</span>
+								<div className={styles.eventDescriptionWrapper}>
+									<div className={styles.eventDescriptionInner}>
+									<span className={styles.eventDescription}>
+										{event.description || 'Без описания'}
+									</span>
+									</div>
+								</div>
+								</div>
 							</div>
 							<div className={styles.eventRight}>
 								<span className={styles.eventTime} style={{ color: event.color || '#F4A7B9' }}>
@@ -271,7 +282,7 @@ export default function Daily({ selectedDate: propDate, onBack, isCalView = true
 								</span>
 								<button
 									className={styles.deleteBtn}
-    								onClick={() => setDeleteConfirm(event.id)}
+									onClick={(e) => { e.stopPropagation(); setDeleteConfirm(event.id); }}
 								>
 									<MdDeleteOutline size={18} />
 								</button>

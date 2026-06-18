@@ -111,13 +111,13 @@ const Calendar: React.FC<Props> = ({ initialDate, selectedDate, onSelectDate, pl
 			<div className={styles.grid}>
 				{days.map(({ date, outside }) => {
 					const isSel = selected ? isSameDay(selected, date) : false
-					const isToday = isSameDay(today, date) // Проверка на сегодняшнюю дату
+					const isToday = isSameDay(today, date)
 					const hasPlans = plansSet.has(toIsoDayKey(date))
 					const cls = [
 						styles.cell,
 						outside ? styles.outside : '',
 						isSel ? styles.selected : '',
-						isToday ? styles.today : '', // Добавляем класс для сегодняшней даты
+						isToday ? styles.today : '',
 						isWeekend(date) ? styles.weekend : '',
 						hasPlans ? styles.hasPlans : '',
 					]
@@ -133,10 +133,10 @@ const Calendar: React.FC<Props> = ({ initialDate, selectedDate, onSelectDate, pl
 			</div>
 
 			<div className={styles.legend}>
-				<div className={styles.legendRow}>
+				{/* <div className={styles.legendRow}>
 					<span className={`${styles.legendSquare} ${styles.legendWeekend}`} />
 					<span>- выходной</span>
-				</div>
+				</div> */}
 				<div className={styles.legendRow}>
 					<span className={`${styles.legendSquare} ${styles.legendPlans}`} />
 					<span>- есть планы</span>

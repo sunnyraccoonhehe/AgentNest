@@ -24,36 +24,32 @@ function PlanneryDesktop() {
 
 	const handleChatSend = async (text: string, addMessage: (msg: ConsoleMessage) => void) => {
 		try {
-			const reply = await dispatch(sendMessage(text)).unwrap();
-
-			addMessage({
-				id: Date.now().toString(),
-				agent: 'assistant',
-				agentColor: '#fe88f2',
-				text: reply,
-				timestamp: new Date(),
-				type: 'success',
-			});
+			await dispatch(sendMessage(text)).unwrap();
+			await dispatch(fetchHistory());
 
 			dispatch(fetchEventsByMonth({
 				year: today.getFullYear(),
 				month: today.getMonth() + 1,
 			}));
 
-		} catch {
+		} catch (err: any) {
+			// Получаем текст ошибки из payload или дефолтный
+			const errorText = err?.message || err?.data?.message || 'Ошибка соединения с ИИ';
+			
 			addMessage({
 				id: Date.now().toString(),
 				agent: 'assistant',
 				agentColor: '#f87171',
-				text: 'Ошибка соединения с ИИ',
+				text: errorText,
 				timestamp: new Date(),
 				type: 'error',
 			});
 		}
 	};
 
+
 	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-	const [showDaily, setShowDaily] = useState(false); // ← новый стейт
+	const [showDaily, setShowDaily] = useState(false);
 	const today = new Date();
 
 	useEffect(() => {
@@ -119,13 +115,14 @@ return (
 
 		<div className={style['right-content']}>
 		{showDaily ? (
+			<div className={style.calendar}> 
 			<Daily 
 			customHeight={blockHeight}
-			customWidth={380}
 			isCalView={false}
 			selectedDate={selectedDate ?? new Date()} 
-			onBack={handleBackToCalendar} // ← кнопка назад
+			onBack={handleBackToCalendar}
 			/>
+			</div>
 		) : (
 			<div className={style.calendar}>
 			<Calendar 

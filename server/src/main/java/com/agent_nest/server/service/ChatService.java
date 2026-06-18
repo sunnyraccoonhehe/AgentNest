@@ -19,7 +19,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,6 +39,10 @@ public class ChatService {
     private final UserRepository userRepo;
     private final EventReminderRepo reminderRepo;
 
+    // Форматтер без секунд — экономит символы в промпте
+    private static final DateTimeFormatter DT_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd.MM");
+
     @Value("${groq.api.key}")
     private String groqApiKey;
 
@@ -51,10 +57,14 @@ public class ChatService {
                 .createdAt(LocalDateTime.now())
                 .build());
 
-        List<Event> events = eventRepo.findByUserIdOrderByStartTimeAsc(userId);
+        // Только события от сегодня — не тащим историю прошлого
+        LocalDateTime windowStart = LocalDateTime.now().minusHours(1); // +1ч назад на случай текущих событий
+        List<Event> events = eventRepo.findByUserIdAndStartTimeAfterOrderByStartTimeAsc(userId, windowStart);
+
         String systemPrompt = getSystemPrompt(events);
 
-        List<ChatMessage> history = chatMessageRepo.findTop10ByUserIdOrderByCreatedAtDesc(userId);
+        // Уменьшаем историю с 10 до 6 сообщений
+        List<ChatMessage> history = chatMessageRepo.findTop6ByUserIdOrderByCreatedAtDesc(userId);
         Collections.reverse(history);
 
         List<Map<String, Object>> messages = new ArrayList<>();
@@ -71,7 +81,7 @@ public class ChatService {
         Map<String, Object> body = Map.of(
                 "model", "llama-3.3-70b-versatile",
                 "messages", messages,
-                "max_tokens", 1200
+                "max_tokens", 600  // снижено с 1200 — ответы ИИ короткие по формату
         );
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
@@ -99,10 +109,7 @@ public class ChatService {
                 reply = matcher.find() ? matcher.group(1) : content;
             }
 
-
-            //сохраняем ответ
             String cleanReply = reply;
-            int jsonEnd = reply.lastIndexOf('}');
             int replyEnd = reply.indexOf("} {");
             if (replyEnd > 0) {
                 cleanReply = reply.substring(0, replyEnd).trim();
@@ -122,7 +129,6 @@ public class ChatService {
             }
             throw e;
         }
-
     }
 
     private void executeActions(Long userId, List<Map<String, Object>> actions) {
@@ -144,21 +150,25 @@ public class ChatService {
                     request.setEndTime(LocalDateTime.parse((String) action.get("endTime")));
                     eventService.createEvent(userId, request);
                 }
-                case "UPDATE" -> {
-
-                }
+                case "UPDATE" -> {}
                 case "CREATE_RECURRING" -> {
                     String title = (String) action.get("title");
                     LocalDateTime startTime = LocalDateTime.parse((String) action.get("startTime"));
                     LocalDateTime endTime = LocalDateTime.parse((String) action.get("endTime"));
                     int days = Integer.parseInt(action.get("days").toString());
+                    LocalDateTime now = LocalDateTime.now();
 
                     for (int i = 0; i < days; i++) {
+                        LocalDateTime iterStart = startTime.plusDays(i);
+                        LocalDateTime iterEnd = endTime.plusDays(i);
+
+                        if (iterEnd.isBefore(now)) continue;
+
                         EventRequest request = new EventRequest();
                         request.setTitle(title);
                         request.setDescription((String) action.getOrDefault("description", ""));
-                        request.setStartTime(startTime.plusDays(i));
-                        request.setEndTime(endTime.plusDays(i));
+                        request.setStartTime(iterStart);
+                        request.setEndTime(iterEnd);
                         eventService.createEvent(userId, request);
                     }
                 }
@@ -167,10 +177,18 @@ public class ChatService {
                     LocalDateTime newStart = LocalDateTime.parse((String) action.get("startTime"));
                     LocalDateTime newEnd = LocalDateTime.parse((String) action.get("endTime"));
 
+                    Event event = eventRepo.findById(eventId)
+                            .orElseThrow(() -> new RuntimeException("Event not found"));
+
+                    if (!event.getUser().getId().equals(userId)) {
+                        throw new RuntimeException("Access denied");
+                    }
+
                     EventUpdateRequest request = new EventUpdateRequest();
                     request.setStartTime(newStart);
                     request.setEndTime(newEnd);
 
+                    request.setDescription(event.getDescription());
                     eventService.updateEvent(eventId, userId, request);
                 }
                 case "CREATE_REMINDER" -> {
@@ -191,7 +209,6 @@ public class ChatService {
                             .sent(false)
                             .build();
 
-
                     reminderRepo.save(reminder);
                 }
             }
@@ -200,51 +217,45 @@ public class ChatService {
 
     @Nonnull
     private static String getSystemPrompt(List<Event> events) {
-        StringBuilder eventsContext = new StringBuilder();
-        eventsContext.append("События пользователя:\n");
+        // Компактный список событий: одна строка = одно событие
+        StringBuilder eventsContext = new StringBuilder("События:\n");
         for (Event e : events) {
-            eventsContext.append(String.format("- [ID:%d] %s: %s — %s\n",
-                    e.getId(), e.getTitle(), e.getStartTime(), e.getEndTime()));
+            eventsContext.append(String.format("[%d]%s %s-%s\n",
+                    e.getId(),
+                    e.getTitle(),
+                    e.getStartTime().format(DT_FMT),
+                    e.getEndTime().format(DT_FMT)));
         }
 
+        String now = LocalDateTime.now().format(DT_FMT);
+
+        // Промпт сокращён ~в 2.5 раза без потери смысла
         return """
-            Ты — умный планировщик времени. Помогаешь пользователю управлять событиями.
+            Планировщик времени. Сейчас: %s
+            Отвечай ТОЛЬКО JSON: {"reply":"...","actions":[...]}
             
-            КРИТИЧЕСКИ ВАЖНО: Отвечай ТОЛЬКО валидным JSON. Никакого текста до или после. Никаких markdown блоков. Никаких ```json. Только чистый JSON:
-                     {
-                       "reply": "текст ответа пользователю",
-                       "actions": []
-                     }
+            Действия:
+            DELETE: {"type":"DELETE","eventId":1}
+            CREATE: {"type":"CREATE","title":"...","startTime":"2026-06-16T10:00","endTime":"2026-06-16T11:00"}
+            RECURRING: {"type":"CREATE_RECURRING","title":"...","startTime":"...","endTime":"...","days":14}
+            MOVE: {"type":"MOVE","eventId":1,"startTime":"...","endTime":"..."}
+            REMINDER: {"type":"CREATE_REMINDER","eventId":1,"minutesBefore":30}
             
-            Доступные действия:
-            { "type": "DELETE", "eventId": 123 }
-            { "type": "CREATE", "title": "...", "startTime": "2026-06-15T10:00:00", "endTime": "2026-06-15T11:00:00" }
-            { "type": "CREATE_RECURRING", "title": "...", "startTime": "...", "endTime": "...", "days": 14 }
-            — используй это для повторяющихся событий вместо множества CREATE
-            { "type": "MOVE", "eventId": 123, "startTime": "2026-06-20T10:00:00", "endTime": "2026-06-20T11:00:00" }
-            — используй для переноса события на другое время
-            { "type": "CREATE_REMINDER", "eventId": 123, "minutesBefore": 30 }
-            — используй когда пользователь просит напомнить о событии
+            Правила:
+            - startTime всегда >= сейчас; "на весь месяц" = с сегодня до конца месяца
+            - MOVE для переноса, не CREATE
+            - reply = только текст, без JSON
+            - Язык: русский
+            - Если время не указано, переспроси про время
             
-                СТРОГИЕ ПРАВИЛА:
-                    - Если не знаешь какое действие использовать — НЕ придумывай новые типы, просто верни "actions": []
-                    - Никогда не используй CREATE вместо MOVE для переноса события
-                    - В поле "reply" пиши только человекочитаемый текст, без JSON
-                    - Если выполнил действие — подтверди его в "reply" простым текстом, например: "Готово! Перенёс встречу на 20 июля в 18:00"
-                    - Отвечай на русском языке
-           
-                ВАЖНО: поле "reply" должно содержать ТОЛЬКО текст для пользователя.
-                    НЕПРАВИЛЬНО: "reply": "Готово! { \\"type\\": \\"MOVE\\"... }" \s
-                    ПРАВИЛЬНО: "reply": "Готово! Перенесла игру в баскетбол на 20 июля в 18:00"
-            
-            """ + eventsContext;
+            """.formatted(now) + eventsContext;
     }
 
     public List<ChatMessage> getHistory(Long userId) {
-        return chatMessageRepo.findTop10ByUserIdOrderByCreatedAtDesc(userId);
+        return chatMessageRepo.findTop6ByUserIdOrderByCreatedAtDesc(userId);
     }
+
     public List<ChatMessage> getFullHistory(Long userId) {
         return chatMessageRepo.findByUserIdOrderByCreatedAtAsc(userId);
     }
-
 }

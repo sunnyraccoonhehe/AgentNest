@@ -37,25 +37,56 @@ const Console: React.FC<ConsoleProps> = ({ messages: externalMessages, onSend })
 	));
 	const [input, setInput] = useState('');
 	const bodyRef = useRef<HTMLDivElement>(null);
+	const prevIdsRef = useRef<Set<string>>(new Set());
+
+	const scrollToBottom = () => {
+		requestAnimationFrame(() => {
+			if (bodyRef.current) {
+				bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+			}
+		});
+	};
 
 	const addMessage = (msg: ConsoleMessage) => {
 		setInternalMessages(prev => [...prev, msg]);
-		setTimeout(() => setVisible(prev => new Set([...prev, msg.id])), 30);
+		setTimeout(() => {
+			setVisible(prev => new Set([...prev, msg.id]));
+			scrollToBottom();
+		}, 30);
 	};
 
 	useEffect(() => {
+		if (externalMessages) {
+			externalMessages.forEach(m => prevIdsRef.current.add(m.id));
+		}
+		setTimeout(() => scrollToBottom(), 50);
+	}, []);
+
+	useEffect(() => {
 		if (!externalMessages) return;
+
+		const newMessages = externalMessages.filter(m => !prevIdsRef.current.has(m.id));
+		
+		if (newMessages.length === 0) return;
+
+		externalMessages.forEach(m => prevIdsRef.current.add(m.id));
+
 		setInternalMessages(externalMessages);
-		externalMessages.forEach((m, i) => {
-			setTimeout(() => setVisible(prev => new Set([...prev, m.id])), i * 60);
+
+		newMessages.forEach((m, i) => {
+			setTimeout(() => {
+				setVisible(prev => new Set([...prev, m.id]));
+				if (i === newMessages.length - 1) scrollToBottom();
+			}, i * 60);
 		});
 	}, [externalMessages]);
 
+	// Начальная загрузка
 	useEffect(() => {
-		if (bodyRef.current) {
-			bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+		if (externalMessages) {
+			externalMessages.forEach(m => prevIdsRef.current.add(m.id));
 		}
-	}, [internalMessages]);
+	}, []);
 
 	const handleSend = () => {
 		const text = input.trim();
@@ -81,8 +112,7 @@ const Console: React.FC<ConsoleProps> = ({ messages: externalMessages, onSend })
 
 	return (
 		<div className={styles.console}>
-
-			<div className={styles.body} ref={bodyRef} >
+			<div className={styles.body} ref={bodyRef}>
 				{internalMessages.map((msg) => {
 					const sym = TYPE_SYMBOLS[msg.type ?? 'info'];
 					const typeClass = TYPE_CLASSES[msg.type ?? 'info'];
@@ -100,7 +130,7 @@ const Console: React.FC<ConsoleProps> = ({ messages: externalMessages, onSend })
 						</div>
 					);
 				})}
-				<div/>
+				<div />
 			</div>
 
 			<div className={styles.inputRow}>

@@ -22,6 +22,8 @@ function monWeekday(date: Date): number {
 	return d === 0 ? 6 : d - 1;
 }
 
+//новый коммнт
+
 function getWeekStart(date: Date): Date {
 	const d = new Date(date);
 	d.setHours(0, 0, 0, 0);

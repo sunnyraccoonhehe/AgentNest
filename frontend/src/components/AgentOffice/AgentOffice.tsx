@@ -1,17 +1,15 @@
-import office from '@assets/images/office.png'
 import walk from '@assets/sprites/walk.png'
 import work from '@assets/sprites/work.png'
 import sleep from '@assets/sprites/sleep.png'
 import deleteAnim from '@assets/sprites/delete.png'
 
-import style from './AgentOffice.module.css'
 import { Sprite } from './Sprite';
 import { useEffect, useState } from 'react'
 
 
 
 const AgentOffice: React.FC = () => {
-
+	//new comms
 	const [randomAnim, setRandom] = useState<number>(0);
 
 	useEffect(() => {

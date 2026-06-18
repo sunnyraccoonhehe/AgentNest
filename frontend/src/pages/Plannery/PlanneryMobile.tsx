@@ -1,6 +1,6 @@
 import { useState } from "react";
 import style from './Plannery.module.css';
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import AgentOffice from "../../components/AgentOffice/AgentOffice";
 import AddEventForm from "../../components/AddEventForm/AddEventForm";
 import { useNavigate } from "react-router-dom";

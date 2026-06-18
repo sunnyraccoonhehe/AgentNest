@@ -4,7 +4,7 @@ import Calendar from '../../components/Calendar/Calendar';
 import Console from '../../components/Console/Console';
 import Daily from '../Daily/Daily';
 import style from './Plannery.module.css';
-import Header from './components/Header';
+import Header from './components/Header/Header.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchEventsByMonth } from '../../features/events/eventsSlice';
 import { sendMessage, fetchHistory } from '../../features/chat/chatSlice';
@@ -24,32 +24,36 @@ function PlanneryDesktop() {
 
 	const handleChatSend = async (text: string, addMessage: (msg: ConsoleMessage) => void) => {
 		try {
-			await dispatch(sendMessage(text)).unwrap();
-			await dispatch(fetchHistory());
+			const reply = await dispatch(sendMessage(text)).unwrap();
+
+			addMessage({
+				id: Date.now().toString(),
+				agent: 'assistant',
+				agentColor: '#fe88f2',
+				text: reply,
+				timestamp: new Date(),
+				type: 'success',
+			});
 
 			dispatch(fetchEventsByMonth({
 				year: today.getFullYear(),
 				month: today.getMonth() + 1,
 			}));
 
-		} catch (err: any) {
-			// Получаем текст ошибки из payload или дефолтный
-			const errorText = err?.message || err?.data?.message || 'Ошибка соединения с ИИ';
-			
+		} catch {
 			addMessage({
 				id: Date.now().toString(),
 				agent: 'assistant',
 				agentColor: '#f87171',
-				text: errorText,
+				text: 'Ошибка соединения с ИИ',
 				timestamp: new Date(),
 				type: 'error',
 			});
 		}
 	};
 
-
 	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-	const [showDaily, setShowDaily] = useState(false);
+	const [showDaily, setShowDaily] = useState(false); // ← новый стейт
 	const today = new Date();
 
 	useEffect(() => {
@@ -115,14 +119,13 @@ return (
 
 		<div className={style['right-content']}>
 		{showDaily ? (
-			<div className={style.calendar}> 
 			<Daily 
 			customHeight={blockHeight}
+			customWidth={380}
 			isCalView={false}
 			selectedDate={selectedDate ?? new Date()} 
-			onBack={handleBackToCalendar}
+			onBack={handleBackToCalendar} // ← кнопка назад
 			/>
-			</div>
 		) : (
 			<div className={style.calendar}>
 			<Calendar 

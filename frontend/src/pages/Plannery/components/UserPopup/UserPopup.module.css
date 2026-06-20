@@ -16,7 +16,7 @@
 
 .popup {
     background: var(--bg-color);
-    border: 1px solid var(--pink);
+    border: 1px solid var(--calendar-border);
     border-radius: 20px;
     padding: 30px 35px 25px;
     min-width: 280px;
@@ -77,9 +77,9 @@
 .logoutBtn {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--pink);
+    border: 1px solid var(--calendar-border);
     background: transparent;
-    color: var(--pink);
+    color: var(--au-text-color);
     border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
@@ -91,11 +91,10 @@
     gap: 8px;
 }
 
-.logoutBtn:hover {
-    background: var(--pink);
-    color: white;
-    /* box-shadow: 0 0 20px var(--grey); */
-}
+/* .logoutBtn:hover {
+    box-shadow:
+
+} */
 
 @keyframes fadeIn {
     0% { opacity: 0; }

@@ -460,10 +460,10 @@ html, body, #root {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--bg-color, #1a1a2e);
-    border: 2px solid var(--pink, #fe88f2);
-    border-radius: 16px;
-    padding: 40px 48px 36px;
+    background: var(--bg-color);
+    border: 1px solid var(--calendar-border); 
+    border-radius: 20px; 
+    padding: 30px 35px 25px;
     max-width: 480px;
     width: 90%;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
@@ -475,7 +475,7 @@ html, body, #root {
 .full-screen.light-theme .popup-center {
     background: #ffffff;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    border-color: #fe88f2;
+    border-color: var(--calendar-border);
 }
 
 .popup-close {
@@ -484,26 +484,26 @@ html, body, #root {
     right: 16px;
     background: none;
     border: none;
-    color: var(--text-secondary, #888);
-    font-size: 28px;
+    color: var(--au-text-color);
+    font-size: 26px;
     cursor: pointer;
-    padding: 0 4px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+    padding: 0;
     line-height: 1;
-    transition: color 0.2s ease, transform 0.2s ease;
+    width: 32px; 
+    height: 32px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; 
 }
 
 .popup-close:hover {
-    color: var(--text-color, #fff);
-    transform: rotate(90deg);
+    opacity: 1; 
+    transform: none;
 }
 
-.full-screen.light-theme .popup-close {
-    color: #666;
-}
-
-.full-screen.light-theme .popup-close:hover {
-    color: #000;
-}
 
 .popup-message {
     font-family: 'SF Pro Display', sans-serif;
@@ -520,7 +520,7 @@ html, body, #root {
 }
 
 .popup-link {
-    color: var(--pink, #fe88f2);
+    color: var(--pink, var(--calendar-border));
     font-weight: 600;
     font-size: 22px;
     text-decoration: underline;
@@ -544,10 +544,12 @@ html, body, #root {
     }
 }
 
+/* Адаптив для попапа */
 @media screen and (max-width: 768px) {
     .popup-center {
-        padding: 32px 32px 28px;
+        padding: 24px 20px 20px;
         max-width: 400px;
+        border-radius: 20px;
     }
 
     .popup-message {
@@ -561,9 +563,10 @@ html, body, #root {
 
 @media screen and (max-width: 480px) {
     .popup-center {
-        padding: 28px 24px 24px;
+        padding: 24px 20px 20px; 
         max-width: 340px;
-        border-radius: 14px;
+        width: 90%;
+        border-radius: 20px;
     }
 
     .popup-message {
@@ -575,9 +578,9 @@ html, body, #root {
     }
 
     .popup-close {
-        font-size: 24px;
-        top: 10px;
-        right: 14px;
+        font-size: 20px;
+        top: 12px;
+        right: 16px;
     }
 }
 
@@ -585,7 +588,7 @@ html, body, #root {
     .popup-center {
         padding: 24px 18px 20px;
         max-width: 290px;
-        border-radius: 12px;
+        border-radius: 20px;
     }
 
     .popup-message {
@@ -597,8 +600,8 @@ html, body, #root {
     }
 
     .popup-close {
-        font-size: 22px;
-        top: 8px;
-        right: 12px;
+        font-size: 18px;
+        top: 10px;
+        right: 14px;
     }
 }

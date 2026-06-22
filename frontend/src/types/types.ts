@@ -1,17 +1,17 @@
 export interface User {
-  id: number;
-  username: string;
+  id?: number;
+  username?: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  timezone: string;
-  avatarUrl: string;
-  role: 'USER' | 'ADMIN' | 'PREMIUM';
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  lastLogin: string | null;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  timezone?: string;
+  avatarUrl?: string;
+  role?: 'USER' | 'ADMIN' | 'PREMIUM';
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  lastLogin?: string | null;
 }
 
 export interface UserRegistration {

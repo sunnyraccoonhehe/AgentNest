@@ -3,11 +3,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import API from '../../api/axiosConfig';
 
 interface User {
-	id: number;
+	id?: number;
 	email: string;
 	username: string;
 	phone?: string;
-	verified: boolean;
+	verified?: boolean;
 }
 
 interface AuthState {
@@ -46,14 +46,17 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
 	'auth/register',
 	async (
-		data: { email: string; password: string; phone?: string; username?: string },
+		data: { email: string; password: string; username?: string; phone?: string },
 		{ dispatch, rejectWithValue }
 	) => {
 		try {
 			const response = await API.post('/auth/register', data);
 			const { token } = response.data;
+
 			localStorage.setItem('token', token);
+
 			await dispatch(fetchCurrentUser());
+
 			return token;
 		} catch (error: any) {
 			return rejectWithValue(error.response?.data?.message || 'Ошибка регистрации');
@@ -104,7 +107,6 @@ const authSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			// Логин
 			.addCase(login.pending, (state) => {
 				state.loading = true;
 				state.error = null;
@@ -125,6 +127,7 @@ const authSlice = createSlice({
 			})
 			.addCase(register.fulfilled, (state, action: PayloadAction<string>) => {
 				state.token = action.payload;
+				state.isAuthenticated = true;
 				state.loading = false;
 			})
 			.addCase(register.rejected, (state, action) => {

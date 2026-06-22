@@ -119,13 +119,15 @@ return (
 
 		<div className={style['right-content']}>
 		{showDaily ? (
+			<div className={style.calendar}>
 			<Daily 
 			customHeight={blockHeight}
 			customWidth={380}
 			isCalView={false}
 			selectedDate={selectedDate ?? new Date()} 
-			onBack={handleBackToCalendar} // ← кнопка назад
+			onBack={handleBackToCalendar}
 			/>
+			</div>
 		) : (
 			<div className={style.calendar}>
 			<Calendar 

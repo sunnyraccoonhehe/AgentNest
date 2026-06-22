@@ -39,7 +39,6 @@ public class ChatService {
     private final UserRepository userRepo;
     private final EventReminderRepo reminderRepo;
 
-    // Форматтер без секунд — экономит символы в промпте
     private static final DateTimeFormatter DT_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd.MM");
 
@@ -57,13 +56,11 @@ public class ChatService {
                 .createdAt(LocalDateTime.now())
                 .build());
 
-        // Только события от сегодня — не тащим историю прошлого
-        LocalDateTime windowStart = LocalDateTime.now().minusHours(1); // +1ч назад на случай текущих событий
+        LocalDateTime windowStart = LocalDateTime.now().minusHours(1);
         List<Event> events = eventRepo.findByUserIdAndStartTimeAfterOrderByStartTimeAsc(userId, windowStart);
 
         String systemPrompt = getSystemPrompt(events);
 
-        // Уменьшаем историю с 10 до 6 сообщений
         List<ChatMessage> history = chatMessageRepo.findTop6ByUserIdOrderByCreatedAtDesc(userId);
         Collections.reverse(history);
 
@@ -81,7 +78,7 @@ public class ChatService {
         Map<String, Object> body = Map.of(
                 "model", "llama-3.3-70b-versatile",
                 "messages", messages,
-                "max_tokens", 600  // снижено с 1200 — ответы ИИ короткие по формату
+                "max_tokens", 600  
         );
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
@@ -150,7 +147,42 @@ public class ChatService {
                     request.setEndTime(LocalDateTime.parse((String) action.get("endTime")));
                     eventService.createEvent(userId, request);
                 }
-                case "UPDATE" -> {}
+                case "UPDATE" -> {
+                    Long eventId = Long.valueOf(action.get("eventId").toString());
+
+                    Event event = eventRepo.findById(eventId)
+                            .orElseThrow(() -> new RuntimeException("Event not found"));
+
+                    if (!event.getUser().getId().equals(userId)) {
+                        throw new RuntimeException("Access denied");
+                    }
+
+                    EventUpdateRequest request = new EventUpdateRequest();
+
+                    if (action.get("title") != null) {
+                        request.setTitle((String) action.get("title"));
+                    }
+
+                    if (action.get("description") != null) {
+                        request.setDescription((String) action.get("description"));
+                    } else {
+                        request.setDescription(event.getDescription());
+                    }
+
+                    if (action.get("startTime") != null) {
+                        request.setStartTime(LocalDateTime.parse((String) action.get("startTime")));
+                    } else {
+                        request.setStartTime(event.getStartTime());
+                    }
+
+                    if (action.get("endTime") != null) {
+                        request.setEndTime(LocalDateTime.parse((String) action.get("endTime")));
+                    } else {
+                        request.setEndTime(event.getEndTime());
+                    }
+
+                    eventService.updateEvent(eventId, userId, request);
+                }
                 case "CREATE_RECURRING" -> {
                     String title = (String) action.get("title");
                     LocalDateTime startTime = LocalDateTime.parse((String) action.get("startTime"));
@@ -217,7 +249,6 @@ public class ChatService {
 
     @Nonnull
     private static String getSystemPrompt(List<Event> events) {
-        // Компактный список событий: одна строка = одно событие
         StringBuilder eventsContext = new StringBuilder("События:\n");
         for (Event e : events) {
             eventsContext.append(String.format("[%d]%s %s-%s\n",
@@ -229,7 +260,6 @@ public class ChatService {
 
         String now = LocalDateTime.now().format(DT_FMT);
 
-        // Промпт сокращён ~в 2.5 раза без потери смысла
         return """
             Планировщик времени. Сейчас: %s
             Отвечай ТОЛЬКО JSON: {"reply":"...","actions":[...]}
@@ -240,6 +270,7 @@ public class ChatService {
             RECURRING: {"type":"CREATE_RECURRING","title":"...","startTime":"...","endTime":"...","days":14}
             MOVE: {"type":"MOVE","eventId":1,"startTime":"...","endTime":"..."}
             REMINDER: {"type":"CREATE_REMINDER","eventId":1,"minutesBefore":30}
+            UPDATE: {"type":"UPDATE","eventId":1,"title":"...","description":"...","startTime":"...","endTime":"..."}
             
             Правила:
             - startTime всегда >= сейчас; "на весь месяц" = с сегодня до конца месяца
@@ -247,6 +278,9 @@ public class ChatService {
             - reply = только текст, без JSON
             - Язык: русский
             - Если время не указано, переспроси про время
+            UPDATE:
+            - можно менять title, description, startTime, endTime
+            - передавай только те поля, которые нужно изменить
             
             """.formatted(now) + eventsContext;
     }

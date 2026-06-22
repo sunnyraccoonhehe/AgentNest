@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 
 type Props = {
 	sprite: string;
@@ -19,6 +20,7 @@ export function Sprite({
 }: Props) {
 
 	const [frame, setFrame] = useState(0);
+	const isMobile = useIsMobile();
 
 	useEffect(() => {
 		const id = setInterval(() => {
@@ -31,15 +33,19 @@ export function Sprite({
 
 	const x = -(frame % columns) * frameWidth;
 	const y = -Math.floor(frame / columns) * frameHeight;
-
+	const scale = isMobile ? 1.3 : 1.2;
 	return (
-		<div style={{
+		<div
+			style={{
 				width: frameWidth,
 				height: frameHeight,
 				backgroundImage: `url(${sprite})`,
 				backgroundPosition: `${x}px ${y}px`,
-				imageRendering: "pixelated",
-			}}>
-		</div>
+				transform: `scale(${scale})`,
+				transformOrigin: 'center bottom',
+				imageRendering: 'pixelated',
+			}}
+
+			/>
 	);
 }

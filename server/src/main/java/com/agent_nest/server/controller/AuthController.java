@@ -42,7 +42,8 @@ public class AuthController {
     
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(userDetails);
+        String email = userDetails.getUsername();
+        return ResponseEntity.ok(authService.getCurrentUser(email));
     }
 
     @GetMapping("/health")

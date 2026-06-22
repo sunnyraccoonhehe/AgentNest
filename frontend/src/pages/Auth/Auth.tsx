@@ -59,7 +59,7 @@ export const Auth: React.FC<AuthProps> = ({ view, setView, onStartPlanning }) =>
 	};
 
 	const handleRegister = async () => {
-		const result = await dispatch(register({ email, password, username, phone }));
+		const result = await dispatch(register({ email, password }));
 		if (register.fulfilled.match(result)) {
 			username ? setView('ready') : setView('profile');
 		}

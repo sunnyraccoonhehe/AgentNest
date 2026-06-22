@@ -34,9 +34,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         
         String path = request.getRequestURI();
-        
-        // Пропускаем все /auth/* запросы без проверки токена
-        if (path.startsWith("/api/auth/") || path.startsWith("/auth/")) {
+
+        if (path.contains("/auth/login")
+            || path.contains("/auth/register")
+            || path.contains("/auth/health")) {
             chain.doFilter(request, response);
             return;
         }

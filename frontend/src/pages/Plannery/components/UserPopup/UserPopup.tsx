@@ -7,10 +7,12 @@ type UserPopupProps = {
     onClose: () => void;
 };
 
+
 function UserPopup({ onClose }: UserPopupProps) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.auth);
+    const { user }  = useAppSelector((state) => state.auth);
+
 
     const handleLogout = () => {
         dispatch(logout());
@@ -25,7 +27,7 @@ function UserPopup({ onClose }: UserPopupProps) {
                 
                 <div className={style.userInfo}>
                     <p className={style.nickname}>{user?.username || 'Без имени'}</p>
-                    <p className={style.email}>{user?.email || 'email не указан'}</p>
+                    {/* <p className={style.email}>{user?.email || 'email не указан'}</p> */}
                     {user?.phone && (
                         <p className={style.phone}>📱 {user.phone}</p>
                     )}

@@ -71,4 +71,8 @@ public class AuthService {
             .verified(true)
             .build();
     }
+
+    public UserResponse getCurrentUser(String email) {
+        return userService.getUserByEmail(email);
+    }
 }
